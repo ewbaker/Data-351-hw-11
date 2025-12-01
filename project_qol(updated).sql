@@ -39,7 +39,7 @@ CREATE TABLE freedom (
     ef_legal NUMERIC CHECK (ef_legal >= 0 AND ef_legal <= 10)
 );
 
--- 2. Populate tables from consolidated_country_data_2019(final).csv (132 rows)
+-- 2. Populate tables from Staging Table 
 
 INSERT INTO countries (country_name, region, gdp_usd, infant_mortality, population)
 SELECT DISTINCT 
@@ -48,7 +48,7 @@ SELECT DISTINCT
     usd_gdp_per_capita, 
     infant_mortality_per_1000_births, 
     population
-FROM consolidated_country_data_2019(final).csv;
+FROM staging_data;
 
 INSERT INTO happiness (country_name, ladder_score, social_support, healthy_life_expectancy, generosity, corruption_perception)
 SELECT DISTINCT 
@@ -58,7 +58,7 @@ SELECT DISTINCT
     healthy_life_expectancy, 
     generosity, 
     perceptions_of_corruption
-FROM consolidated_country_data_2019(final).csv;
+FROM staging_data;
 
 INSERT INTO freedom (country_name, pf_ss, pf_score, hf_score, ef_legal)
 SELECT DISTINCT 
@@ -67,4 +67,4 @@ SELECT DISTINCT
     pf_score, 
     hf_score, 
     ef_legal
-FROM consolidated_country_data_2019(final).csv;
+FROM staging_data;

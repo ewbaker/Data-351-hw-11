@@ -16,24 +16,28 @@ This problem filters for the "Ideal" countries based on 4 distinct criteria.
     -- ORDER BY healthy_life_expectancy DESC
 
 COPY (
-    SELECT 
-        c.country_name, 
-        c.region, 
-        h.healthy_life_expectancy, 
-        c.gdp_usd, 
-        f.pf_ss,
-        f.pf_score,
-        h.social_support
-    FROM countries c
-    JOIN happiness h ON c.country_name = h.country_name
-    JOIN freedom f ON c.country_name = f.country_name
-    WHERE f.pf_ss > 8.0
-      AND c.gdp_usd > 20000        
-      AND h.social_support > 0.9   
-      AND f.pf_score > 8.0         
-    ORDER BY h.healthy_life_expectancy DESC
+SELECT 
+    c.country_name, 
+    c.region, 
+    h.healthy_life_expectancy, 
+    c.gdp_usd, 
+    f.pf_ss,
+    f.pf_score,
+    h.social_support
+FROM countries c
+JOIN happiness h ON c.country_name = h.country_name
+JOIN freedom f ON c.country_name = f.country_name
+WHERE f.pf_ss > 8.0
+  AND c.gdp_usd > 20000        
+  AND h.social_support > 0.9   
+  AND f.pf_score > 8.0         
+ORDER BY 
+    f.pf_ss DESC,                   -- Priority 1
+    h.healthy_life_expectancy DESC, -- Priority 2
+    f.pf_score DESC,                -- The rest...
+    c.gdp_usd DESC,
+    h.social_support DESC
 )
 TO 'C:/Users/YourName/Downloads/ideal_destinations.csv' 
 WITH (FORMAT CSV, HEADER);
-
 ```

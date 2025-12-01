@@ -16,7 +16,10 @@ WITH Health_Stats AS (
         infant_mortality,
         CASE 
             WHEN infant_mortality < 10 THEN 'High Quality'
-            WHEN infant_mortality BETWEEN 10 AND 40 THEN 'Developing'
+            WHEN infant_mortality BETWEEN 10 AND 19.999 THEN 'Good Standard'
+            WHEN infant_mortality BETWEEN 20 AND 29.999 THEN 'Moderate Standard'
+            WHEN infant_mortality BETWEEN 30 AND 39.999 THEN 'Low Standard'
+            WHEN infant_mortality BETWEEN 40 AND 49.999 THEN 'High Risk'            
             ELSE 'Crisis'
         END AS health_tier
     FROM countries
