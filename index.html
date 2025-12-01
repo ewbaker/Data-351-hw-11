@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework: Quality of Life Analysis</title>
+    <style>
+        /* --- RESET & BASIC SETUP --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #f4f6f8;
+            color: #333333;
+            line-height: 1.65;
+        }
+        
+        a { text-decoration: none; color: #2980b9; font-weight: 500; }
+        a:hover { text-decoration: underline; }
+
+        /* --- HEADER (The Green Bar) --- */
+        header {
+            background-color: #244a35;
+            color: white;
+            padding: 45px 0;
+            border-bottom: 4px solid #1a3526;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .header-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.6rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        header .subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-top: 8px;
+            font-weight: 300;
+        }
+
+        /* --- MAIN LAYOUT (Content Left, TOC Right) --- */
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 50px;
+            position: relative;
+        }
+
+        /* --- LEFT COLUMN (The Assignment) --- */
+        main {
+            flex: 3;
+            min-width: 0;
+        }
+
+        /* --- RIGHT COLUMN (The Sticky TOC) --- */
+        aside {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .toc-box {
+            /* STICKY BEHAVIOR */
+            position: -webkit-sticky;
+            position: sticky;
+            top: 30px;
+            
+            font-size: 0.95rem;
+            border-left: 2px solid #e0e0e0;
+            padding-left: 20px;
+        }
+
+        .toc-title {
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #777;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .toc-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .toc-box li {
+            margin-bottom: 12px;
+        }
+        .toc-box a {
+            color: #555;
+            display: block;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .toc-box a:hover {
+            color: #5a4282;
+            transform: translateX(5px);
+        }
+        
+        /* --- CONTENT STYLING --- */
+        p { margin-bottom: 1.4rem; }
+        
+        .purple-btn {
+            display: block;
+            background-color: #5a4282;
+            color: white;
+            text-align: center;
+            padding: 14px;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background-color 0.2s, transform 0.1s;
+            margin: 35px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+        .purple-btn:hover {
+            background-color: #483569;
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+
+        code {
+            background-color: #fff;
+            border: 1px solid #d1d5da;
+            color: #e83e8c; /* Pinkish red for code */
+            padding: 2px 6px;
+            font-size: 0.9em;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            border-radius: 3px;
+        }
+
+        pre {
+            background-color: #2b2b2b; 
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: "SFMono-Regular", Consolas, monospace;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 50px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e0e0e0;
+            color: #244a35;
+            font-weight: 600;
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 25px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        ul {
+            margin-bottom: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* The visual connector for problems */
+        .problem-block {
+            background-color: white;
+            padding: 30px;
+            border: 1px solid #e1e4e5;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+        }
+
+        .data-source-box {
+            background-color: #e8f4f8;
+            border-left: 4px solid #2980b9;
+            padding: 15px 20px;
+            margin: 20px 0;
+            font-size: 0.95rem;
+            color: #444;
+        }
+        
+        .hint-text {
+            font-size: 0.9em;
+            color: #555;
+            background-color: #fff3cd;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-content">
+            <h1>Homework 11</h1>
+            <div class="subtitle">Data Management with SQL: Quality of Life Analysis</div>
+        </div>
+    </header>
+
+    <!-- CONTAINER -->
+    <div class="container">
+        
+        <!-- MAIN CONTENT -->
+        <main>
+            <p>
+                In this assignment, we move beyond simple happiness metrics to construct a robust <strong>Quality of Life (QoL)</strong> analysis. 
+                You will query a unified global dataset to investigate the intersection of <strong>Economic Wealth</strong>, 
+                <strong>Personal Safety</strong>, and <strong>Individual Liberty</strong>.
+            </p>
+
+            <div class="data-source-box">
+                <p><strong>About the Data:</strong> The dataset used in this assignment (<code>consolidated_country_data_2019(final).csv</code>) 
+                is a 2019 snapshot created by merging three sources: the <strong>World Happiness Report</strong>, 
+                the <strong>Human Freedom Index</strong> (filtered to 2019), and the <strong>CIA World Factbook</strong>.</p>
+                
+                <p style="margin-bottom:0"><strong>⚠️ Important Column Notes:</strong></p>
+                <ul style="margin-top:5px; margin-bottom:0">
+                    <li><strong>GDP:</strong> There are two GDP columns. When asked for "Wealth" in dollars, use <code>usd_gdp_per_capita</code> (from CIA Factbook), NOT <code>gdp_per_capita</code> (which is a normalized score).</li>
+                    <li><strong>Happiness:</strong> The overall happiness metric is found in the column named <code>score</code>.</li>
+                </ul>
+            </div>
+
+            <a href="https://github.com/Rembold-DATA351/pair-project-sql-freedom-happiness-project" class="purple-btn" target="_blank">
+                Accept Assignment
+            </a>
+
+            <h2 id="setup">Database Setup</h2>
+            <p>
+                In the repository lives a file named <code>project_qol.sql</code>. This is a <em>database dump</em> derived from our consolidated CSV. 
+                The easiest method to get started is to use the command line tool <code>psql</code> to hydrate your database.
+            </p>
+
+            <pre>psql -d analysis -U yourusername -f project_qol.sql</pre>
+
+            <p>
+                This will create your tables. Ensure you identify the primary keys (Country Names/Codes) that link your metrics together 
+                before starting the problems below.
+            </p>
+
+            <!-- PROBLEM 1 -->
+            <div class="problem-block" id="prob1">
+                <h2>Problem 1: The Hierarchy of Needs</h2>
+                <p>Before a population can focus on "Happiness," they must first be safe. We want to define a "Livable" country as one that meets a baseline safety threshold.</p>
+                
+                <h3>Part A</h3>
+                <p>Identify the top 5 countries with the highest <strong>Security & Safety</strong> score (<code>pf_ss</code>) from the Freedom dataset. Display the Country Name, Region, and Safety Score.</p>
+                
+                <h3>Part B</h3>
+                <p>Does money buy safety? Group the data by <strong>Region</strong>. Calculate the average <strong>USD GDP per Capita</strong> (<code>usd_gdp_per_capita</code>) and the average <strong>Safety Score</strong> (<code>pf_ss</code>). Order by Safety Score descending.</p>
+                
+                <h3>Part C</h3>
+                <p>Find the "Hidden Gems." Write a query that returns countries with a <code>pf_ss</code> score <strong>above</strong> the global average, but a <code>usd_gdp_per_capita</code> <strong>below</strong> the global average. Return Country, GDP ($), and Safety Score.</p>
+            </div>
+
+            <!-- PROBLEM 2 -->
+            <div class="problem-block" id="prob2">
+                <h2>Problem 2: The "True" Quality of Life</h2>
+                <p>Subjective Happiness (WHR) is often influenced by culture, whereas Infant Mortality (CIA Factbook) is a hard objective fact about infrastructure quality.</p>
+
+                <p>Create a <strong>CTE</strong> named <code>Health_Stats</code>. Categorize <strong>Infant Mortality</strong> (<code>infant_mortality_per_1000_births</code>) into three tiers:</p>
+                <ul>
+                    <li>'High Quality' (< 10)</li>
+                    <li>'Developing' (10 - 40)</li>
+                    <li>'Crisis' (> 40)</li>
+                </ul>
+                <p>Join this CTE with the Happiness data to calculate the average <strong>Happiness Score</strong> (column <code>score</code>) for each tier.</p>
+            </div>
+
+            <!-- PROBLEM 3 -->
+            <div class="problem-block" id="prob3">
+                <h2>Problem 3: The Ultimate Migration List</h2>
+                <p>You are advising a client who wants to move to a country that balances all aspects of the "Good Life."</p>
+                
+                <p>Write a single query that filters for countries meeting <strong>ALL</strong> of the following criteria:</p>
+                <ul>
+                    <li><strong>Safety (pf_ss):</strong> > 8.0</li>
+                    <li><strong>Wealth (usd_gdp_per_capita):</strong> > $20,000</li>
+                    <li><strong>Community (social_support):</strong> > 0.90</li>
+                    <li><strong>Freedom (pf_score):</strong> > 8.0</li>
+                </ul>
+                <p>Order by <strong>Healthy Life Expectancy</strong> (<code>healthy_life_expectancy</code>) descending. Export the result to <code>ideal_destinations.csv</code>.</p>
+            </div>
+            
+            <p style="color: #999; font-size: 0.8rem; margin-top: 50px; border-top: 1px solid #ddd; padding-top: 10px;">
+                Assignment Generated: November 28, 2025
+            </p>
+
+        </main>
+
+        <!-- TOC SIDEBAR -->
+        <aside>
+            <div class="toc-box">
+                <div class="toc-title">Table of Contents</div>
+                <ul>
+                    <li><a href="#setup">Database Setup</a></li>
+                    <li><a href="#prob1">Problem 1: Hierarchy of Needs</a></li>
+                    <li><a href="#prob2">Problem 2: True Quality of Life</a></li>
+                    <li><a href="#prob3">Problem 3: Migration List</a></li>
+                </ul>
+            </div>
+        </aside>
+
+    </div>
+
+</body>
+</html>
